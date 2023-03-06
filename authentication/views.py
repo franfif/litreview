@@ -6,7 +6,7 @@ from authentication import forms
 
 def signup_page(request):
     if request.method == 'POST':
-        form = forms.SignUpForm(request.post)
+        form = forms.SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
