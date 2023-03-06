@@ -6,12 +6,12 @@
     </head>
     <body>
         <navbar class="navbar">
-            <a href="{% url 'home' %}"><h1>LITReview</h1></a>
+            <h1>LITReview</h1>
             {% if user.is_authenticated %}
-                <p><a href="">Feed</a></p>
+                <p><a href="{% url 'home' %}">Feed</a></p>
                 <p><a href="">Posts</a></p>
                 <p><a href="">Following</a></p>
-                <p><a href="">Log out</a></p>
+                <p><a href="{% url 'logout' %}">Log out</a></p>
             {% endif %}
         </navbar>
         {% if messages %}
