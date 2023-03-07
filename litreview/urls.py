@@ -18,4 +18,11 @@ urlpatterns = [
     path('signup/', authentication.views.signup_page, name='signup'),
 
     path('home/', reviews.views.home_page, name='home'),
+    path('tickets/create_ticket/', reviews.views.create_ticket, name='create_ticket'),
+    path('tickets/<int:ticket_id>/write_review/',
+         reviews.views.write_review_from_ticket,
+         name='write_review'),
+    path('tickets/create_ticket_review/',
+         reviews.views.create_ticket_and_review,
+         name='create_ticket_review'),
 ]
