@@ -55,3 +55,8 @@ def write_review_from_ticket(request, ticket_id):
 @login_required
 def create_ticket_and_review(request):
     pass
+
+
+@login_required
+def view_own_posts(request):
+    pass
