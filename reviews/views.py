@@ -73,5 +73,14 @@ def create_ticket_and_review(request):
 
 
 @login_required
-def view_own_posts(request):
-    pass
+def view_posts(request):
+    reviews = models.Review.objects.filter(user=request.user)
+    tickets = models.Ticket.objects.filter(user=request.user)
+
+    tickets_and_reviews = sorted(chain(tickets, reviews),
+                                 key=lambda x: x.time_created,
+                                 reverse=True)
+    return render(request,
+                  'reviews/posts.html',
+                  context={'tickets_and_reviews': tickets_and_reviews})
+
