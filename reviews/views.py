@@ -63,9 +63,11 @@ def create_ticket_and_review(request):
         if all([ticket_form.is_valid(), review_form.is_valid()]):
             ticket = ticket_form.save(commit=False)
             ticket.user = request.user
+            ticket.save()
             review = review_form.save(commit=False)
             review.user = request.user
             review.ticket = ticket
+            review.save()
             return redirect('home')
     return render(request,
                   'reviews/create_ticket_review.html',
