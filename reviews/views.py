@@ -1,5 +1,6 @@
 from itertools import chain
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -84,3 +85,21 @@ def view_posts(request):
                   'reviews/posts.html',
                   context={'tickets_and_reviews': tickets_and_reviews})
 
+
+@login_required
+def edit_ticket(request, ticket_id):
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    if request.user != ticket.user:
+        messages.add_message(request, messages.ERROR, "You don't have permission to edit this ticket.")
+        return redirect('posts')
+    form = forms.TicketForm(instance=ticket)
+    if request.method == 'POST':
+        form = forms.TicketForm(request.POST, request.FILES,
+                                instance=ticket)
+        if form.is_valid():
+            form.save()
+            return redirect('posts')
+    return render(request,
+                  'reviews/edit_ticket.html',
+                  context={'ticket': ticket,
+                           'form': form})

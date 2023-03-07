@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Edit your ticket</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>Title</p>
+    {{ form.title }}
+    <p>Description</p>
+    <p>{{ form.description }}</p>
+    {% if ticket.image %}
+        <img src="{{ ticket.image.url }}" alt="">
+    {% endif %}
+    {{ form.image }}
+
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}
