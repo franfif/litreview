@@ -1,11 +1,19 @@
+from itertools import chain
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
 from . import forms, models
 
-@login_required()
+
+@login_required
 def home_page(request):
-    hello_world = "Hellow World!"
+    tickets = models.Ticket.objects.all()
+    reviews = models.Review.objects.all().exclude(ticket__in=tickets)
+
+    tickets_and_reviews = sorted(chain(tickets, reviews),
+                                 key=lambda x: x.time_created,
+                                 reverse=True)
     return render(request,
                   'reviews/home_page.html',
                   context={'tickets_and_reviews': tickets_and_reviews})

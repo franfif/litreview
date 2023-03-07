@@ -1,7 +1,17 @@
 {% extends 'base.html' %}
+{% load reviews_extras %}
 
 {% block content %}
 
-<p>{{ greetings }}</p>
+<a href="{% url 'create_ticket' %}">Request a review</a>
+<a href="{% url 'create_ticket_review' %}">Post a review</a>
+
+{% for instance in tickets_and_reviews %}
+    {% if instance|model_type == 'Ticket' %}
+        {% include 'reviews/partials/ticket_snippet.html' with ticket=instance %}
+    {% elif instance|model_type == 'Review' %}
+        {% include 'reviews/partials/review_snippet.html' with review=instance %}
+    {% endif %}
+{% endfor %}
 
 {% endblock %}
