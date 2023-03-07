@@ -1,0 +1,11 @@
+<p>{{ review.user.username }} posted a review
+{{ review.time_created }}</p>
+<p>{{ review.headline }} - {{ review.rating }}</p>
+<p>{{ review.body }}</p>
+
+<p>Ticket - {{ review.ticket.user.username }}</p>
+<p>{{ review.ticket.title }}</p>
+<p>{{ review.ticket.body }}</p>
+{% if review.ticket.image %}
+    <img src="{{ review.ticket.image.url }}" alt="">
+{% endif %}

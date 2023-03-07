@@ -1,0 +1,9 @@
+<p>{{ ticket.user.username }} requested a review
+{{ ticket.time_created }}</p>
+<p>{{ ticket.title }}</p>
+<p>{{ ticket.body }}</p>
+{% if ticket.image %}
+    <img src="{{ ticket.image.url }}" alt="">
+{% endif %}
+
+<a href="{% url 'write_review' ticket.id %}">Post a review</a>
