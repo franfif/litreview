@@ -8,8 +8,8 @@ from . import forms, models
 
 @login_required
 def home_page(request):
-    tickets = models.Ticket.objects.all()
-    reviews = models.Review.objects.all().exclude(ticket__in=tickets)
+    reviews = models.Review.objects.all()
+    tickets = models.Ticket.objects.all().exclude(review__in=reviews)
 
     tickets_and_reviews = sorted(chain(tickets, reviews),
                                  key=lambda x: x.time_created,
