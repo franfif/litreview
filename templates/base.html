@@ -9,7 +9,7 @@
         <navbar class="navbar">
             <h1>LITReview</h1>
             {% if user.is_authenticated %}
-                <p><a href="{% url 'home' %}">Feed</a></p>
+                <p><a href="{% url 'feed' %}">Feed</a></p>
                 <p><a href="{% url 'posts' %}">Posts</a></p>
                 <p><a href="{% url 'following' %}">Following</a></p>
                 <p>Logged as {{ user.username }}</p>

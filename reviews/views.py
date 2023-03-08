@@ -29,7 +29,7 @@ def create_ticket(request):
             ticket = form.save(commit=False)
             ticket.user = request.user
             ticket.save()
-            return redirect('home')
+            return redirect(settings.LOGIN_REDIRECT_URL)
     return render(request,
                   'reviews/create_ticket.html',
                   context={'form': form})
@@ -46,7 +46,7 @@ def write_review_from_ticket(request, ticket_id):
             review.user = request.user
             review.ticket = ticket
             review.save()
-            return redirect('home')
+            return redirect(settings.LOGIN_REDIRECT_URL)
     return render(request,
                   'reviews/write_review.html',
                   context={'form': form,
@@ -68,7 +68,7 @@ def create_ticket_and_review(request):
             review.user = request.user
             review.ticket = ticket
             review.save()
-            return redirect('home')
+            return redirect(settings.LOGIN_REDIRECT_URL)
     return render(request,
                   'reviews/create_ticket_review.html',
                   context={'ticket_form': ticket_form,

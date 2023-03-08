@@ -21,7 +21,7 @@ urlpatterns = [
 
     path('following/', authentication.views.following_page, name='following'),
 
-    path('home/', reviews.views.home_page, name='home'),
+    path('feed/', reviews.views.feed, name='feed'),
     path('tickets/create_ticket/',
          reviews.views.create_ticket, name='create_ticket'),
     path('tickets/<int:ticket_id>/write_review/',
