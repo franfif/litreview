@@ -3,22 +3,30 @@ from itertools import chain
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 
 from . import forms, models
 
 
 @login_required
-def home_page(request):
-    reviews = models.Review.objects.all()
-    tickets = models.Ticket.objects.all().exclude(review__in=reviews)
+def feed(request):
+    reviews = models.Review.objects.filter(
+        Q(user=request.user) |
+        Q(user__in=request.user.follows.all()) |
+        Q(ticket__user=request.user)
+    )
+    tickets = models.Ticket.objects.filter(
+        Q(user=request.user) |
+        Q(user__in=request.user.follows.all())
+    )
 
-    tickets_and_reviews = sorted(chain(tickets, reviews),
-                                 key=lambda x: x.time_created,
-                                 reverse=True)
+    posts = sorted(chain(tickets, reviews),
+                   key=lambda x: x.time_created,
+                   reverse=True)
     return render(request,
-                  'reviews/home_page.html',
-                  context={'tickets_and_reviews': tickets_and_reviews})
+                  'reviews/feed.html',
+                  context={'posts': posts})
 
 
 @login_required
