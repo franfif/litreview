@@ -10,7 +10,8 @@
             {% if user.is_authenticated %}
                 <p><a href="{% url 'home' %}">Feed</a></p>
                 <p><a href="{% url 'posts' %}">Posts</a></p>
-                <p><a href="">Following</a></p>
+                <p><a href="{% url 'following' %}">Following</a></p>
+                <p>Logged as {{ user.username }}</p>
                 <p><a href="{% url 'logout' %}">Log out</a></p>
             {% endif %}
         </navbar>

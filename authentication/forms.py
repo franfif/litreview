@@ -18,4 +18,17 @@ class SignUpForm(UserCreationForm):
 class FollowUsersForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
-        fields = ['follows']
+        fields = []
+
+    follow_user = forms.CharField(max_length=63)
+
+
+class UnfollowUsersForm(forms.ModelForm):
+    class Meta:
+        model = get_user_model()
+        fields = []
+
+    unfollow_user = forms.CharField(widget=forms.HiddenInput,
+                                    initial="")
+
+

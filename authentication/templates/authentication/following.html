@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h4>Follow New Users</h4>
+<form method="post">
+    {% csrf_token %}
+    {{ follow_form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+
+<h4>Following</h4>
+{% for user in followed %}
+<p>{{ user.username }}</p>
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="unfollow_user" value="{{ user.username }}">
+    <input type="submit" value="Unfollow">
+</form>
+{% endfor %}
+
+<h4>Followers</h4>
+{% for user in followers %}
+<p>{{ user.username }}</p>
+{% endfor %}
+
+
+{% endblock %}

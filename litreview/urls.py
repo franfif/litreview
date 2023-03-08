@@ -19,6 +19,8 @@ urlpatterns = [
     ), name='logout'),
     path('signup/', authentication.views.signup_page, name='signup'),
 
+    path('following/', authentication.views.following_page, name='following'),
+
     path('home/', reviews.views.home_page, name='home'),
     path('tickets/create_ticket/',
          reviews.views.create_ticket, name='create_ticket'),
