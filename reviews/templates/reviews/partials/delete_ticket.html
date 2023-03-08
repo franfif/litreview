@@ -1,0 +1,20 @@
+<!-- Trigger/Open the Modal -->
+<button onclick="document.getElementById('delete-ticket-{{ instance.id }}').style.display='block'"
+class="button">Delete</button>
+
+<!-- The Modal -->
+<div id="delete-ticket-{{ instance.id }}" class="modal" style="display:none;">
+  <div class="modal-content">
+    <div class="container">
+      <h4>Are you sure you want to delete this ticket?</h4>
+      <p>All reviews on this ticket will be deleted as well.</p>
+      <button onclick="document.getElementById('delete-ticket-{{ instance.id }}').style.display='none'">
+        Cancel
+      </button>
+      <form action="{% url 'delete_ticket' instance.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Delete">
+      </form>
+    </div>
+  </div>
+</div>

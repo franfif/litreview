@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load reviews_extras %}
+
+{% block content %}
+<h2>Edit your review</h2>
+<h4>You are posting in response to</h4>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>Title</p>
+    {{ form.headline }}
+    <p>Description</p>
+    <p>{{ form.body }}</p>
+
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}

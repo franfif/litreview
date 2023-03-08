@@ -6,11 +6,13 @@
 {% for instance in tickets_and_reviews %}
     {% if instance|model_type == 'Ticket' %}
         {% include 'reviews/partials/ticket_snippet.html' with ticket=instance %}
+        <a href="{% url 'edit_ticket' instance.id %}">Edit</a>
+        {% include 'reviews/partials/delete_ticket.html' %}
     {% elif instance|model_type == 'Review' %}
         {% include 'reviews/partials/review_snippet.html' with review=instance %}
+        <a href="{% url 'edit_review' instance.id %}">Edit</a>
+        {% include 'reviews/partials/delete_review.html' %}
     {% endif %}
-    <a href="">Edit</a>
-    <a href="">Delete</a>
 {% endfor %}
 
 {% endblock %}

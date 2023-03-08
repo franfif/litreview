@@ -105,3 +105,52 @@ def edit_ticket(request, ticket_id):
                   'reviews/edit_ticket.html',
                   context={'ticket': ticket,
                            'form': form})
+
+
+@login_required
+def edit_review(request, review_id):
+    review = get_object_or_404(models.Review, id=review_id)
+    if request.user != review.user:
+        messages.error(request,
+                       "You don't have permission to edit this review.")
+        return redirect('posts')
+    form = forms.ReviewForm(instance=review)
+    if request.method == 'POST':
+        form = forms.ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+            return redirect('posts')
+    return render(request,
+                  'reviews/edit_review.html',
+                  context={'review': review,
+                           'form': form})
+
+
+@login_required
+def delete_ticket(request, ticket_id):
+    ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    if request.user != ticket.user:
+        messages.error(request,
+                       "You don't have permission to delete this ticket.")
+        return redirect('posts')
+    if request.method == 'POST':
+        ticket.delete()
+        messages.success(request,
+                         f'The ticket {ticket.title} has been successfully deleted')
+        return redirect('posts')
+    return render('posts')
+
+
+@login_required
+def delete_review(request, review_id):
+    review = get_object_or_404(models.Review, id=review_id)
+    if request.user != review.user:
+        messages.error(request,
+                       "You don't have permission to delete this review.")
+        return redirect('posts')
+    if request.method == 'POST':
+        review.delete()
+        messages.success(request,
+                         f'The review {review.headline} has been successfully deleted')
+        return redirect('posts')
+    return render('posts')
