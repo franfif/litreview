@@ -5,3 +5,12 @@
 .review-container {
     border: 1px solid black;
 }
+
+/* Forms */
+.text-muted {
+    display: none;
+}
+
+.asteriskField {
+    display: none;
+}

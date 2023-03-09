@@ -1,15 +1,10 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
 
 {% block content %}
-<div class="text-center">
-    <form class="form-signin" action="" method="post">
-        <h1>Sign up</h1>
-        {% csrf_token %}
-        {{ form|crispy}}
-        <a href="{% url 'login' %}">Go Back</a>
-        <input type="submit" value="Submit">
-    </form>
+<div class="row">
+<div class="col-md-7 col-lg-5 mx-auto">
+{% include 'authentication/partials/display_form.html' with title='Sign Up' cancel='Go Back' %}
+</div>
 </div>
 
 {% endblock %}
