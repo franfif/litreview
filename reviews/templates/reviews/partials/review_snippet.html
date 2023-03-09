@@ -1,7 +1,10 @@
+<div class="review-container">
 <p>{{ review.user.username }} posted a review
 {{ review.time_created }}</p>
 <p>{{ review.headline }} - {{ review.rating }}</p>
 <p>{{ review.body }}</p>
+
+    <div class="ticket-container">
 
 <p>Ticket - {{ review.ticket.user.username }}</p>
 <p>{{ review.ticket.title }}</p>
@@ -9,3 +12,6 @@
 {% if review.ticket.image %}
     <img src="{{ review.ticket.image.url }}" alt="">
 {% endif %}
+    </div>
+
+</div>
