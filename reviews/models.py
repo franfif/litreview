@@ -1,3 +1,4 @@
+import os
 from PIL import Image
 
 from django.conf import settings
@@ -23,6 +24,11 @@ class Ticket(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         self.resize_image()
+
+    def delete(self, *args, **kwargs):
+        os.remove(self.image.path)
+        super().delete(*args, **kwargs)
+
 
 
 class Review(models.Model):
