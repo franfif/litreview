@@ -1,17 +1,22 @@
-<div class="review-container">
-<p>{{ review.user.username }} posted a review
-{{ review.time_created }}</p>
-<p>{{ review.headline }} - {{ review.rating }}</p>
-<p>{{ review.body }}</p>
+{% load reviews_extras %}
 
-    <div class="ticket-container">
-
-<p>Ticket - {{ review.ticket.user.username }}</p>
-<p>{{ review.ticket.title }}</p>
-<p>{{ review.ticket.body }}</p>
-{% if review.ticket.image %}
-    <img src="{{ review.ticket.image.url }}" alt="">
-{% endif %}
+<div class="card border-secondary my-2">
+    <div class="card-header d-flex">
+        <span class="flex-fill ">{% get_poster_display review.user %} posted a review</span>
+        <span class="flex-fill text-right">{{ review.time_created }}</span>
     </div>
+    <div class="card-body">
+        <h5 class="card-title">{{ review.headline }} - {{ review.rating }}</h5>
+        <div class="card-text mb-4">{{ review.body }}</div>
 
+        {% include 'reviews/partials/ticket_snippet.html' with ticket=review.ticket %}
+
+        {% if review.editable %}
+        <div class="text-right">
+            <a class="card-link btn btn-primary" href="{% url 'edit_review' review.id %}">Edit review</a>
+            {% include 'reviews/partials/delete_review.html' %}
+
+        </div>
+        {% endif %}
+    </div>
 </div>

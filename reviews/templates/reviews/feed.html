@@ -3,8 +3,14 @@
 
 {% block content %}
 
-<a href="{% url 'create_ticket' %}">Request a review</a>
-<a href="{% url 'create_ticket_review' %}">Post a review</a>
+<div class="row">
+    <div class="col align-self-center text-center my-4">
+        <a class="btn btn-primary col-7" href="{% url 'create_ticket' %}">Request a review</a>
+    </div>
+    <div class="col align-self-center text-center my-4">
+        <a class="btn btn-primary col-7" href="{% url 'create_ticket_review' %}">Post a review</a>
+    </div>
+</div>
 
 {% for post in posts %}
     {% if post|model_type == 'Ticket' %}

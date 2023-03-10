@@ -1,0 +1,7 @@
+{% load crispy_forms_tags %}
+
+<h1 class="text-center mt-5 mb-3">{{ title }}</h1>
+{% crispy form %}
+{% if cancel %}
+<a class="btn btn-secondary" href="{% url 'login' %}">Go back</a>
+{% endif %}

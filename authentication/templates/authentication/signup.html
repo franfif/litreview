@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <a href="{% url 'login' %}">Go Back</a>
-    <input type="submit" value="Submit">
-</form>
+<div class="row">
+<div class="col-md-7 col-lg-5 mx-auto">
+{% include 'authentication/partials/display_form.html' with title='Sign Up' cancel='Go Back' %}
+</div>
+</div>
 
 {% endblock %}

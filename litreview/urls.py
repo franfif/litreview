@@ -1,8 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.auth.views import LoginView, \
-    LogoutView, PasswordChangeView, PasswordChangeDoneView
+from django.contrib.auth.views import LogoutView
 from django.urls import path
 
 import authentication.views
@@ -10,10 +9,7 @@ import reviews.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', LoginView.as_view(
-        template_name='authentication/login.html',
-        redirect_authenticated_user=True,
-    ), name='login'),
+    path('', authentication.views.login_page, name='login'),
     path('logout/', LogoutView.as_view(
         template_name='authentication/logout.html',
     ), name='logout'),

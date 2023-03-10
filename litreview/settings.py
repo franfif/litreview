@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     'authentication',
     'reviews',
     'bootstrap4',
+    'crispy_forms',
+    'crispy_bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +127,5 @@ LOGIN_REDIRECT_URL = 'feed'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR.joinpath('media/')
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
