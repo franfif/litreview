@@ -1,6 +1,8 @@
+{% load reviews_extras %}
+
 <div class="card border-primary my-2">
     <div class="card-header d-flex">
-        <span class="flex-fill ">{{ ticket.user.username }} requested a review</span>
+        <span class="flex-fill ">{% get_poster_display ticket.user %} requested a review</span>
         <span class="flex-fill text-right">{{ ticket.time_created }}</span>
     </div>
     <div class="card-body">
@@ -11,7 +13,16 @@
                   <img src="{{ ticket.image.url }}" alt="">
             </div>
         {% endif %}
-
-        <a class="card-link btn btn-primary" href="{% url 'write_review' ticket.id %}">Post a review</a>
+        <div class="text-right">
+            {% if post.editable %}
+                {% if ticket.editable %}
+                    <a class="card-link btn btn-primary" href="{% url 'edit_ticket' ticket.id %}">Edit ticket</a>
+                    {% include 'reviews/partials/delete_ticket.html' %}
+                {% endif %}
+            {% else %}
+                <a class="card-link btn btn-primary" href="{% url 'write_review' ticket.id %}">Post a review</a>
+            {% endif %}
+        </div>
     </div>
+
 </div>

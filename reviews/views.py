@@ -3,7 +3,7 @@ from itertools import chain
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Q, Value, BooleanField
 from django.shortcuts import render, redirect, get_object_or_404
 
 from . import forms, models
@@ -87,14 +87,17 @@ def create_ticket_and_review(request):
 @login_required
 def view_posts(request):
     reviews = models.Review.objects.filter(user=request.user)
+    reviews = reviews.annotate(editable=Value(True, BooleanField()))
     tickets = models.Ticket.objects.filter(user=request.user)
+    tickets = tickets.annotate(editable=Value(True, BooleanField()))
 
-    tickets_and_reviews = sorted(chain(tickets, reviews),
-                                 key=lambda x: x.time_created,
-                                 reverse=True)
+    posts = sorted(chain(tickets, reviews),
+                   key=lambda x: x.time_created,
+                   reverse=True)
+
     return render(request,
                   'reviews/posts.html',
-                  context={'tickets_and_reviews': tickets_and_reviews})
+                  context={'posts': posts})
 
 
 @login_required
