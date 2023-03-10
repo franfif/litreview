@@ -17,18 +17,19 @@ class Ticket(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
 
     def resize_image(self):
-        with Image.open(self.image) as image:
-            image.thumbnail(self.IMAGE_MAX_SIZE)
-            image.save(self.image.path)
+        if self.image:
+            with Image.open(self.image) as image:
+                image.thumbnail(self.IMAGE_MAX_SIZE)
+                image.save(self.image.path)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         self.resize_image()
 
     def delete(self, *args, **kwargs):
-        os.remove(self.image.path)
+        if self.image:
+            os.remove(self.image.path)
         super().delete(*args, **kwargs)
-
 
 
 class Review(models.Model):
