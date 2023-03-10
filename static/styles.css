@@ -14,3 +14,9 @@
 .asteriskField {
     display: none;
 }
+
+/* Tickets */
+.card-img-container img {
+    max-width: 100%;
+    height: auto;
+}
