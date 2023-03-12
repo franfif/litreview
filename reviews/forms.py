@@ -12,7 +12,6 @@ class TicketForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_tag = False
         self.helper.disable_csrf = True
-        self.helper.include_media = True
         self.helper.layout = Layout(
             Field('title'),
             Field('description'),
@@ -36,7 +35,6 @@ class ReviewForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_tag = False
         self.helper.disable_csrf = True
-        # self.helper.add_input(Submit('submit', 'Submit', css_class='float-right'))
 
     class Meta:
         model = models.Review
