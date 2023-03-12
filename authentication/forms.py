@@ -14,7 +14,6 @@ class LoginForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = FORM_CLASS
-
         self.helper.add_input(Submit('submit', 'Log In'))
 
     username = forms.CharField(max_length=63)
@@ -27,7 +26,6 @@ class SignUpForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = FORM_CLASS
-
         self.helper.add_input(Submit('submit', 'Submit'))
 
     class Meta(UserCreationForm.Meta):
@@ -50,5 +48,3 @@ class UnfollowUsersForm(forms.ModelForm):
 
     unfollow_user = forms.CharField(widget=forms.HiddenInput,
                                     initial="")
-
-
