@@ -1,5 +1,5 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
+from crispy_forms.layout import Submit, Field, Layout, Div
 
 from django import forms
 from django.contrib.auth import get_user_model
@@ -34,6 +34,20 @@ class SignUpForm(UserCreationForm):
 
 
 class FollowUsersForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = FORM_CLASS
+        self.helper.form_show_labels = False
+        self.helper.layout = Layout(
+            Div(
+                Field('follow_user', wrapper_class='col mb-0'),
+                Submit('submit', 'Submit', css_class='col-auto'),
+                css_class='row mb-3'
+            )
+        )
+        # self.helper.add_input()
+
     class Meta:
         model = get_user_model()
         fields = []
