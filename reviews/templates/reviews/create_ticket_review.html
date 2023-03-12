@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
+<h1 class="text-center mt-5 mb-3">Post a review</h1>
+
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <p>Book/Article</p>
-    {{ ticket_form.as_p }}
-    <p>Review</p>
-    {{ review_form.as_p }}
-    <input type="submit" value="Submit">
+    <h4>Book/Article</h4>
+    {% crispy ticket_form %}
+
+    <h4 class="mt-4">Review</h4>
+    {% crispy review_form %}
+    <input class="btn btn-primary float-right mb-5" type="submit" value="Submit">
 </form>
 
 {% endblock %}

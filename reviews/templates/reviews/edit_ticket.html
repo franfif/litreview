@@ -1,19 +1,13 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-<h2>Edit your ticket</h2>
+<h1 class="text-center mt-5 mb-3">Edit your ticket</h1>
+
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <p>Title</p>
-    {{ form.title }}
-    <p>Description</p>
-    <p>{{ form.description }}</p>
-    {% if ticket.image %}
-        <img src="{{ ticket.image.url }}" alt="">
-    {% endif %}
-    {{ form.image }}
-
-    <input type="submit" value="Submit">
+    {% crispy form %}
+    <input class="btn btn-primary float-right mb-5" type="submit" value="Submit">
 </form>
 
 {% endblock %}

@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
-{% load reviews_extras %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-<h2>Edit your review</h2>
-<h4>You are posting in response to</h4>
 
-<form method="post" enctype="multipart/form-data">
+<h1 class="text-center mt-5 mb-3">Edit your review</h1>
+
+<h4>You are posting in response to this ticket</h4>
+{% include 'reviews/partials/ticket_snippet.html' with ticket=review.ticket %}
+<h4 class="mt-4">Review</h4>
+
+<form method="post">
     {% csrf_token %}
-    <p>Title</p>
-    {{ form.headline }}
-    <p>Description</p>
-    <p>{{ form.body }}</p>
-
-    <input type="submit" value="Submit">
+    {% crispy form %}
+    <input class=" btn btn-primary float-right mb-5" type="submit" value="Submit">
 </form>
 
 {% endblock %}
