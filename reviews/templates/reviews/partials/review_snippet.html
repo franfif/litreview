@@ -14,8 +14,7 @@
         {% if review.editable %}
         <div class="text-right">
             <a class="card-link btn btn-primary" href="{% url 'edit_review' review.id %}">Edit review</a>
-            {% include 'reviews/partials/delete_review.html' %}
-
+            {% include 'reviews/partials/delete_post.html' %}
         </div>
         {% endif %}
     </div>

@@ -17,7 +17,7 @@
             {% if post.editable %}
                 {% if ticket.editable %}
                     <a class="card-link btn btn-primary" href="{% url 'edit_ticket' ticket.id %}">Edit ticket</a>
-                    {% include 'reviews/partials/delete_ticket.html' %}
+                    {% include 'reviews/partials/delete_post.html' %}
                 {% endif %}
             {% else %}
                 <a class="card-link btn btn-primary" href="{% url 'write_review' ticket.id %}">Post a review</a>

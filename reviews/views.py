@@ -138,32 +138,43 @@ def edit_review(request, review_id):
                   context={'review': review,
                            'form': form})
 
+#
+# @login_required
+# def delete_ticket(request, ticket_id):
+#     ticket = get_object_or_404(models.Ticket, id=ticket_id)
+#     if request.user != ticket.user:
+#         messages.error(request,
+#                        "You don't have permission to delete this ticket.")
+#         return redirect('posts')
+#     if request.method == 'POST':
+#         ticket.delete()
+#         messages.success(request,
+#                          f'The ticket {ticket.title} has been successfully deleted')
+#         return redirect('posts')
+#     return render('posts')
+
 
 @login_required
-def delete_ticket(request, ticket_id):
-    ticket = get_object_or_404(models.Ticket, id=ticket_id)
-    if request.user != ticket.user:
+def delete_post(request, model_type, post_id):
+    if model_type == 'Review':
+        post_model = models.Review
+    elif model_type == 'Ticket':
+        post_model = models.Ticket
+    else:
+        # When the item to delete is neither a Review nor a Ticket
         messages.error(request,
-                       "You don't have permission to delete this ticket.")
+                       'You are trying to delete something else than a ticket or a review.')
+        return redirect('posts')
+    post = get_object_or_404(post_model, id=post_id)
+    # The user is not allowed to delete a post they did not write
+    if request.user != post.user:
+        messages.error(request,
+                       f"You don't have permission to delete this {model_type.lower()}.")
         return redirect('posts')
     if request.method == 'POST':
-        ticket.delete()
+        post.delete()
+        post_name = post.title if model_type == "Ticket" else post.headline
         messages.success(request,
-                         f'The ticket {ticket.title} has been successfully deleted')
+                         f'The {model_type} {post_name} has been successfully deleted')
         return redirect('posts')
-    return render('posts')
-
-
-@login_required
-def delete_review(request, review_id):
-    review = get_object_or_404(models.Review, id=review_id)
-    if request.user != review.user:
-        messages.error(request,
-                       "You don't have permission to delete this review.")
-        return redirect('posts')
-    if request.method == 'POST':
-        review.delete()
-        messages.success(request,
-                         f'The review {review.headline} has been successfully deleted')
-        return redirect('posts')
-    return render('posts')
+    return redirect('posts')

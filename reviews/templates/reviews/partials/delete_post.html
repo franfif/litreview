@@ -1,0 +1,42 @@
+{% load reviews_extras %}
+
+<!-- Trigger/Open the Modal -->
+<button type="button" class="card-link btn btn-warning mx-1"
+        data-toggle="modal" data-target="#delete-{{ post|model_type }}-{{ post.id }}">
+  Delete {{ post|model_type|lower }}
+</button>
+
+<!-- The Modal -->
+<div class="modal fade"
+     id="delete-{{ post|model_type }}-{{ post.id }}" data-backdrop="static" data-keyboard="false"
+     tabindex="-1" aria-labelledby="staticBackdrop{{ post.id }}" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdrop{{ post.id }}">Delete {{ post|model_type }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        {% if post|model_type == 'Ticket' %}
+          <p>Are you sure you want to delete your ticket {{ ticket.title }}?</p>
+          {% if ticket.review_set.count == 1 %}
+            <p class="font-weight-light font-italic">This will also delete the review of this ticket.</p>
+          {% elif ticket.review_set.count > 1 %}
+            <p class="font-weight-light font-italic">This will also delete the {{ ticket.review_set.count }} reviews of this ticket.</p>
+          {% endif %}
+        {% elif post|model_type == 'Review' %}
+          <p>Are you sure you want to delete your review of {{ review.ticket.title }}?</p>
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <form action="{% url 'delete_post' post|model_type post.id %}" method="post">
+          {% csrf_token %}
+          <input class="btn btn-primary" type="submit" value="Delete">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

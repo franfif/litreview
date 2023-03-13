@@ -33,10 +33,8 @@ urlpatterns = [
     path('reviews/<int:review_id>/edit_review/',
          reviews.views.edit_review, name='edit_review'),
 
-    path('tickets/<int:ticket_id>/delete_ticket/',
-         reviews.views.delete_ticket, name='delete_ticket'),
-    path('reviews/<int:review_id>/delete_review/',
-         reviews.views.delete_review, name='delete_review'),
+    path('tickets/<str:model_type>/<int:post_id>/delete/',
+         reviews.views.delete_post, name='delete_post'),
 ]
 
 if settings.DEBUG:

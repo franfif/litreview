@@ -13,3 +13,8 @@ def get_poster_display(context, user):
     if context['user'] == user:
         return 'You'
     return user.username
+
+
+@register.filter
+def number_of_reviews(ticket):
+    reviews = ticket.objects
