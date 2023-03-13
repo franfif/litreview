@@ -16,5 +16,5 @@ def get_poster_display(context, user):
 
 
 @register.filter
-def stars(rating):
-    return '★' * rating + '☆' * (5-rating)
+def stars(review):
+    return review.get_rating_display()

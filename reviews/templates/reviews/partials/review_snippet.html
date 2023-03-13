@@ -6,7 +6,7 @@
         <span class="flex-fill text-right">{{ review.time_created }}</span>
     </div>
     <div class="card-body">
-        <h5 class="card-title">{{ review.headline }} - {{ review.rating|stars }}</h5>
+        <h5 class="card-title">{{ review.headline }} - <span class="stars">{{ review|stars }}</span></h5>
         <div class="card-text mb-4">{{ review.body }}</div>
 
         {% include 'reviews/partials/ticket_snippet.html' with ticket=review.ticket %}
