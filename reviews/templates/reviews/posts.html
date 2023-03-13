@@ -1,14 +1,9 @@
 {% extends 'base.html' %}
-{% load reviews_extras %}
 
 {% block content %}
 
-{% for post in posts %}
-    {% if post|model_type == 'Ticket' %}
-        {% include 'reviews/partials/ticket_snippet.html' with ticket=post %}
-    {% elif post|model_type == 'Review' %}
-        {% include 'reviews/partials/review_snippet.html' with review=post %}
-    {% endif %}
-{% endfor %}
+<h1 class="text-center mt-5 mb-3">Your posts</h1>
+
+{% include 'reviews/partials/list_posts.html' %}
 
 {% endblock %}

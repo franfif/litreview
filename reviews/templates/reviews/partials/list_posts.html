@@ -1,0 +1,16 @@
+{% load reviews_extras %}
+
+{% if posts|length > 0 %}
+    {% for post in posts %}
+        {% if post|model_type == 'Ticket' %}
+            {% include 'reviews/partials/ticket_snippet.html' with ticket=post %}
+        {% elif post|model_type == 'Review' %}
+            {% include 'reviews/partials/review_snippet.html' with review=post %}
+        {% endif %}
+    {% endfor %}
+{% else %}
+    <h2 class="text-center mt-5 mb-3">You have no content yet.</h2>
+    <h3 class="text-center mt-5 mb-3">You can <a href="{% url 'create_ticket' %}">request a review</a>,
+        <a href="{% url 'create_ticket_review' %}">post a review</a><br>
+        or <a href="{% url 'following' %}">follow more people</a>.</h3>
+{% endif %}
