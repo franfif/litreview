@@ -11,7 +11,7 @@
 {% for user in followed %}
 <div class="row">
    <div class="col">
-       <div class="form-control">{{ user.username }}</div>
+       <div class="form-control bg-light">{{ user.username }}</div>
    </div>
     <form method="post">
         {% csrf_token %}
