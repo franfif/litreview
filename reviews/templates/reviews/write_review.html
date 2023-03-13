@@ -5,7 +5,7 @@
 
 <h1 class="text-center mt-5 mb-3">Write a review</h1>
 <h4>You are posting in response to this ticket</h4>
-{% include 'reviews/partials/ticket_snippet.html' %}
+{% include 'reviews/partials/ticket_snippet.html' with reviewing=True %}
 <h4 class="mt-4">Review</h4>
 <form method="post">
     {% csrf_token %}

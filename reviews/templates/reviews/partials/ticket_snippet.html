@@ -19,7 +19,7 @@
                     <a class="card-link btn btn-primary" href="{% url 'edit_ticket' ticket.id %}">Edit ticket</a>
                     {% include 'reviews/partials/delete_post.html' %}
                 {% endif %}
-            {% else %}
+            {% elif not reviewing and not post.reviewed %}
                 <a class="card-link btn btn-primary" href="{% url 'write_review' ticket.id %}">Post a review</a>
             {% endif %}
         </div>

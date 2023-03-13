@@ -11,15 +11,33 @@ from . import forms, models
 
 @login_required
 def feed(request):
-    reviews = models.Review.objects.filter(
-        Q(user=request.user) |
-        Q(user__in=request.user.follows.all()) |
-        Q(ticket__user=request.user)
+    reviews_reviewed = models.Review.objects.filter(
+        (Q(user=request.user) |
+         Q(user__in=request.user.follows.all()) |
+         Q(ticket__user=request.user)) &
+        Q(ticket__review__user=request.user)
     )
-    tickets = models.Ticket.objects.filter(
-        Q(user=request.user) |
-        Q(user__in=request.user.follows.all())
+    reviews_unreviewed = models.Review.objects.filter(
+        (Q(user=request.user) |
+         Q(user__in=request.user.follows.all()) |
+         Q(ticket__user=request.user))&
+        ~Q(ticket__review__user=request.user)
     )
+    reviews = chain(reviews_reviewed.annotate(reviewed=Value(True, BooleanField())),
+                    reviews_unreviewed.annotate(reviewed=Value(False, BooleanField())))
+
+    tickets_reviewed = models.Ticket.objects.filter(
+        (Q(user=request.user) |
+         Q(user__in=request.user.follows.all())) &
+        Q(review__user=request.user)
+    )
+    tickets_unreviewed = models.Ticket.objects.filter(
+        (Q(user=request.user) |
+         Q(user__in=request.user.follows.all())) &
+        ~Q(review__user=request.user)
+    )
+    tickets = chain(tickets_reviewed.annotate(reviewed=Value(True, BooleanField())),
+                    tickets_unreviewed.annotate(reviewed=Value(False, BooleanField())))
 
     posts = sorted(chain(tickets, reviews),
                    key=lambda x: x.time_created,
@@ -48,6 +66,12 @@ def create_ticket(request):
 def write_review_from_ticket(request, ticket_id):
     form = forms.ReviewForm()
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    reviews = ticket.review_set.all()
+    for review in reviews:
+        if review.user == request.user:
+            messages.warning(request,
+                             "You already posted a review for this ticket. You can edit your review here.")
+            return redirect('edit_review', review.id)
     if request.method == 'POST':
         form = forms.ReviewForm(request.POST)
         if form.is_valid():
