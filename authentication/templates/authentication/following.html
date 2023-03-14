@@ -8,28 +8,34 @@
 </form>
 
 <h2 class="text-center mt-5 mb-3">Following</h2>
-{% for user in followed %}
-<div class="row">
-   <div class="col">
-       <div class="form-control bg-light">{{ user.username }}</div>
-   </div>
-    <form method="post">
-        {% csrf_token %}
-            <input type="hidden" name="unfollow_user" value="{{ user.username }}">
-            <input class="col-auto btn btn-secondary" type="submit" value="Unfollow">
-
-    </form>
-</div>
-{% endfor %}
+{% if followed|length > 0 %}
+    {% for user in followed %}
+    <div class="row">
+       <div class="col">
+           <div class="form-control bg-light">{{ user.username }}</div>
+       </div>
+        <form method="post">
+            {% csrf_token %}
+                <input type="hidden" name="unfollow_user" value="{{ user.username }}">
+                <input class="col-auto btn btn-secondary" type="submit" value="Unfollow">
+        </form>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>You do not follow anybody at the moment. Enter a user's username in the field above to follow them.</p>
+{% endif %}
 
 <h2 class="text-center mt-3 mb-3">Followers</h2>
-{% for user in followers %}
-<div class="row mb-3">
-   <div class="col">
-       <div class="form-control">{{ user.username }}</div>
-   </div>
-</div>
-{% endfor %}
-
+{% if followers|length > 0 %}
+    {% for user in followers %}
+    <div class="row mb-3">
+       <div class="col">
+           <div class="form-control bg-light">{{ user.username }}</div>
+       </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>You have no followers at the moment. Post reviews to get more followers.</p>
+{% endif %}
 
 {% endblock %}
