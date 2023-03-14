@@ -1,10 +1,4 @@
-.ticket-container {
-    border: 1px solid black;
-}
 
-.review-container {
-    border: 1px solid black;
-}
 
 /* Forms */
 #hint_id_username, #hint_id_password2 {
@@ -21,12 +15,20 @@
 }
 
 /* Tickets */
+.bg-ticket {
+background-color: rgb(232, 241, 255);
+}
+
 .card-img-container img {
     max-width: 100%;
     height: auto;
 }
 
 /* Reviews */
+.bg-review {
+background-color: rgb(255, 249, 234);
+}
+
 .stars {
     color: gold;
 }
