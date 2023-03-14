@@ -4,6 +4,13 @@ crispy-bootstrap4==2022.1
 Django==4.1.7
 django-bootstrap4==22.3
 django-crispy-forms==2.0
+flake8==6.0.0
+Jinja2==3.1.2
+MarkupSafe==2.1.2
+mccabe==0.7.0
 Pillow==9.4.0
+pycodestyle==2.10.0
+pyflakes==3.0.1
+Pygments==2.14.0
 soupsieve==2.4
 sqlparse==0.4.3
