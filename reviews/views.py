@@ -20,11 +20,12 @@ def feed(request):
     reviews_unreviewed = models.Review.objects.filter(
         (Q(user=request.user) |
          Q(user__in=request.user.follows.all()) |
-         Q(ticket__user=request.user))&
+         Q(ticket__user=request.user)) &
         ~Q(ticket__review__user=request.user)
     )
-    reviews = chain(reviews_reviewed.annotate(reviewed=Value(True, BooleanField())),
-                    reviews_unreviewed.annotate(reviewed=Value(False, BooleanField())))
+    reviews = chain(
+        reviews_reviewed.annotate(reviewed=Value(True, BooleanField())),
+        reviews_unreviewed.annotate(reviewed=Value(False, BooleanField())))
 
     tickets_reviewed = models.Ticket.objects.filter(
         (Q(user=request.user) |
@@ -36,8 +37,9 @@ def feed(request):
          Q(user__in=request.user.follows.all())) &
         ~Q(review__user=request.user)
     )
-    tickets = chain(tickets_reviewed.annotate(reviewed=Value(True, BooleanField())),
-                    tickets_unreviewed.annotate(reviewed=Value(False, BooleanField())))
+    tickets = chain(
+        tickets_reviewed.annotate(reviewed=Value(True, BooleanField())),
+        tickets_unreviewed.annotate(reviewed=Value(False, BooleanField())))
 
     posts = sorted(chain(tickets, reviews),
                    key=lambda x: x.time_created,
@@ -70,7 +72,8 @@ def write_review_from_ticket(request, ticket_id):
     for review in reviews:
         if review.user == request.user:
             messages.warning(request,
-                             "You already posted a review for this ticket. You can edit your review here.")
+                             "You already posted a review for this ticket."
+                             " You can edit your review here.")
             return redirect('edit_review', review.id)
     if request.method == 'POST':
         form = forms.ReviewForm(request.POST)
@@ -162,21 +165,6 @@ def edit_review(request, review_id):
                   context={'review': review,
                            'form': form})
 
-#
-# @login_required
-# def delete_ticket(request, ticket_id):
-#     ticket = get_object_or_404(models.Ticket, id=ticket_id)
-#     if request.user != ticket.user:
-#         messages.error(request,
-#                        "You don't have permission to delete this ticket.")
-#         return redirect('posts')
-#     if request.method == 'POST':
-#         ticket.delete()
-#         messages.success(request,
-#                          f'The ticket {ticket.title} has been successfully deleted')
-#         return redirect('posts')
-#     return render('posts')
-
 
 @login_required
 def delete_post(request, model_type, post_id):
@@ -187,18 +175,21 @@ def delete_post(request, model_type, post_id):
     else:
         # When the item to delete is neither a Review nor a Ticket
         messages.error(request,
-                       'You are trying to delete something else than a ticket or a review.')
+                       'You are trying to delete something else than a '
+                       'ticket or a review.')
         return redirect('posts')
     post = get_object_or_404(post_model, id=post_id)
     # The user is not allowed to delete a post they did not write
     if request.user != post.user:
         messages.error(request,
-                       f"You don't have permission to delete this {model_type.lower()}.")
+                       f"You don't have permission to delete this "
+                       f"{model_type.lower()}.")
         return redirect('posts')
     if request.method == 'POST':
         post.delete()
         post_name = post.title if model_type == "Ticket" else post.headline
         messages.success(request,
-                         f'The {model_type} {post_name} has been successfully deleted')
+                         f'The {model_type} {post_name} has been '
+                         f'successfully deleted')
         return redirect('posts')
     return redirect('posts')

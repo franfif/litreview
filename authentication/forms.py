@@ -41,7 +41,8 @@ class FollowUsersForm(forms.ModelForm):
         self.helper.form_show_labels = False
         self.helper.layout = Layout(
             Div(
-                Field('follow_user', wrapper_class='col mb-0', placeholder="Enter a username"),
+                Field('follow_user', wrapper_class='col mb-0',
+                      placeholder="Enter a username"),
                 Submit('submit', '🐵 Follow', css_class='col-auto'),
                 css_class='row mb-3'
             )

@@ -17,7 +17,7 @@ class TicketForm(forms.ModelForm):
             Field('title'),
             Field('description'),
             Div(
-                HTML("""{% if ticket.image %}<img class="col-auto" 
+                HTML("""{% if ticket.image %}<img class="col-auto"
                      src="{{ ticket.image.url }}">{% endif %}"""),
                 Field('image', wrapper_class='col'),
                 css_class='row mb-3'
