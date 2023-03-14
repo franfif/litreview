@@ -14,7 +14,7 @@
        <div class="col">
            <div class="form-control bg-light">{{ user.username }}</div>
        </div>
-        <form method="post">
+        <form class="mb-1" method="post">
             {% csrf_token %}
                 <input type="hidden" name="unfollow_user" value="{{ user.username }}">
                 <input class="col-auto btn btn-secondary" type="submit" value="Unfollow">
@@ -25,7 +25,7 @@
     <p>You do not follow anybody at the moment. Enter a user's username in the field above to follow them.</p>
 {% endif %}
 
-<h2 class="text-center mt-3 mb-3">Followers</h2>
+<h2 class="text-center mt-5 mb-3">Followers</h2>
 {% if followers|length > 0 %}
     {% for user in followers %}
     <div class="row mb-3">
