@@ -56,6 +56,7 @@ def following_page(request):
                     user_to_follow = models.User.objects.get(username=username)
                     if user_to_follow and user_to_follow != request.user:
                         request.user.follows.add(user_to_follow)
+                        return redirect('following')
                 except models.User.DoesNotExist:
                     messages.error(
                         request,
