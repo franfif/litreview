@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="{% static 'styles.css' %}">
         <link rel="icon" href="{% static 'media/favicon.ico' %}">
     </head>
-    <body>
+    <body class="d-flex flex-column h-100">
         <nav class="navbar sticky-top navbar-expand-md navbar-light bg-light">
             <a class="navbar-brand" href="{% url 'feed' %}">
                 <img src="{% static 'media/LITReview_Logo_Sq.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -44,9 +44,22 @@
                 </ul>
             </div>
         </nav>
-
-        <div class="container">
-            {% block content %}{% endblock %}
-        </div>
+        <main role="main" class="">
+            <div class="container">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+        <footer class="mt-auto px-auto">
+            <div class="text-center bg-light py-4 px-0 mt-4">
+                <span>
+                    Developed by
+                    <a href="https://github.com/franfif/"
+                       target="_blank" rel="noopener noreferrer">
+                        Francis Barrow
+                    </a>
+                    - 2023
+                </span>
+            </div>
+        </footer>
     </body>
 </html>
