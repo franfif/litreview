@@ -6,10 +6,13 @@ LITReview<br>Django Web Application<br>
 ## Introduction
 LITReview is a (fictional - for education purposes) start-up that aims to release a product that enables a community of users to review books and literature on demand.
 
-This application is a MVP (minimum viable product))
+This MVP (minimum viable product) has been developed with the [Django framework](https://docs.djangoproject.com/en/4.1/).<br>
+[Bootstrap 4](https://getbootstrap.com/docs/4.6) has been use for the design, completed with a few lines of vanilla CSS.
+<br>
+The python package [django-crispy-forms](https://django-crispy-forms.readthedocs.io/) has been used to render most forms in the application.
 
 ## Installation
-To use this program:
+To install this web application:
 - Clone this project to your local disk.
 - Create and open a virtual environment:
 ```bash
@@ -32,6 +35,13 @@ First, a user needs to sign up and log in to the application.
 
 Only a username and a password are required.
 The password must contain at least 8 characters.
+
+For testing, a few users have been created with content (username / password):
+  - book_reviewer / book_reviewer2023
+  - super_review / super_review2023
+  - litreviewer / litreviewer2023
+
+You are welcome to create your own user account and follow the users above.
 ### Navigation
 A navigation bar allows to navigate through the pages of the application:
 - [Feed](#Feed)
@@ -68,11 +78,6 @@ They can see the list of users they follow, and are able to unfollow them.
 
 They can also see the list of their own followers
 
-For testing, a few users have been created with content. Feel free to follow them and respond to their tickets:
-  - book_reviewer
-  - super_review
-  - litreviewer
-
 ### Logout
 The Logout button is located in the dropdown menu with the user's username.
 
@@ -80,27 +85,27 @@ Once the user logs out, they are properly notified and invited to log again, if 
 
 ## Ideas for future developments
 
-### Time zone
+* ### Time zone
 **Currently:** the date and time are displayed in the UTC time zone.
 <br>
 **Goal:** display date and time according to the user's timezone.
 
-### Discover new users
+* ### Discover new users
 **Currently:** a user can only follow another user if they know their username.
 <br>
 **Goal:** allow user to discover other users to initiate relationships.
 
-### Respond to reviews
+* ### Respond to reviews
 **Currently:** no comment is allowed on reviews.
 <br>
 **Goal:** allow user to respond to a review, to open interactions between users.
 
-### See all reviews of a same ticket at once
+* ### See all reviews of a same ticket at once
 **Currently:** tickets and reviews are only sorted by date/time of creation.
 <br>
 **Goal:** give the ability to aggregate all reviews of a same ticket to help reading through them.
 
-### Look for tickets and reviews
+* ### Look for tickets and reviews
 **Currently:** a user can find a ticket or a review by scrolling their feed.
 <br>
 **Goal:** add a search engine to quickly find a ticket or a review.
