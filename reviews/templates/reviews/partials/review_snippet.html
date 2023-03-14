@@ -1,9 +1,9 @@
 {% load reviews_extras %}
 
-<div class="card border-secondary bg-review my-2">
+<div class="card bg-review my-2">
     <div class="card-header d-flex">
-        <span class="flex-fill ">{% get_poster_display review.user %} posted a review</span>
-        <span class="flex-fill text-right">{{ review.time_created }}</span>
+        <span class="flex-fill ">✍️ {% get_poster_display review.user %} posted a review</span>
+        <span class="flex-fill text-right">📅 {{ review.time_created }}</span>
     </div>
     <div class="card-body">
         <h5 class="card-title">{{ review.headline }} - <span class="stars">{{ review|stars }}</span></h5>
@@ -13,7 +13,7 @@
 
         {% if review.editable %}
         <div class="text-right">
-            <a class="card-link btn btn-primary" href="{% url 'edit_review' review.id %}">Edit review</a>
+            <a class="card-link btn btn-primary" href="{% url 'edit_review' review.id %}">✏️ Edit review</a>
             {% include 'reviews/partials/delete_post.html' %}
         </div>
         {% endif %}

@@ -2,8 +2,8 @@
 
 <div class="card border-primary bg-ticket my-2">
     <div class="card-header d-flex">
-        <span class="flex-fill ">{% get_poster_display ticket.user %} requested a review</span>
-        <span class="flex-fill text-right">{{ ticket.time_created }}</span>
+        <span class="flex-fill ">📖 {% get_poster_display ticket.user %} requested a review</span>
+        <span class="flex-fill text-right">📅 {{ ticket.time_created }}</span>
     </div>
     <div class="card-body">
         <h5 class="card-title">{{ ticket.title }}</h5>
@@ -17,11 +17,11 @@
             <div class="text-right col-auto">
                 {% if post.editable %}
                     {% if ticket.editable %}
-                        <a class="card-link btn btn-primary" href="{% url 'edit_ticket' ticket.id %}">Edit ticket</a>
+                        <a class="card-link btn btn-primary" href="{% url 'edit_ticket' ticket.id %}">✏️ Edit ticket</a>
                         {% include 'reviews/partials/delete_post.html' %}
                     {% endif %}
                 {% elif not reviewing and not post.reviewed %}
-                    <a class="card-link btn btn-primary" href="{% url 'write_review' ticket.id %}">Post a review</a>
+                    <a class="card-link btn btn-primary" href="{% url 'write_review' ticket.id %}">✍️ Post a review</a>
                 {% endif %}
             </div>
         </div>

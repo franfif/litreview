@@ -16,7 +16,7 @@
 
 /* Tickets */
 .bg-ticket {
-background-color: rgb(232, 241, 255);
+    background-color: rgb(232, 241, 255);
 }
 
 .card-img-container img {
@@ -26,7 +26,8 @@ background-color: rgb(232, 241, 255);
 
 /* Reviews */
 .bg-review {
-background-color: rgb(255, 249, 234);
+    background-color: rgb(255, 249, 234);
+    border-color: rgb(255, 209, 102);
 }
 
 .stars {
