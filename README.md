@@ -1,6 +1,6 @@
 <h1 align="center">
 LITReview<br>Django Web Application<br>
-<img alt="LITReview logo" src="media/LITReview_Logo.png" width="224px"/><br/>
+<img alt="LITReview logo" src="./static/media/LITReview_Logo.png" width="224px"/><br/>
 </h1>
 
 <h2>Introduction</h2>
