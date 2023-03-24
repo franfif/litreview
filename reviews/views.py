@@ -72,8 +72,8 @@ def write_review_from_ticket(request, ticket_id):
     for review in reviews:
         if review.user == request.user:
             messages.warning(request,
-                             "You already posted a review for this ticket."
-                             " You can edit your review here.")
+                             "You already posted a review for this ticket. "
+                             "You can edit your review here.")
             return redirect('edit_review', review.id)
     if request.method == 'POST':
         form = forms.ReviewForm(request.POST)
