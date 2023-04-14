@@ -11,36 +11,57 @@ from . import forms, models
 
 @login_required
 def feed(request):
+    # List all reviews if:
+    #   the user wrote the review
+    #   OR the user follows the review's author
+    #   OR the user wrote the review's ticket
+    # But only if the user already wrote a review for the same ticket
     reviews_reviewed = models.Review.objects.filter(
         (Q(user=request.user) |
          Q(user__in=request.user.follows.all()) |
          Q(ticket__user=request.user)) &
         Q(ticket__review__user=request.user)
     )
+    # List all reviews if:
+    #   the user follows the review's author
+    #   OR the user wrote the review's ticket
+    # But exclude all reviews when the user already wrote a review for the same ticket
     reviews_unreviewed = models.Review.objects.filter(
-        (Q(user=request.user) |
-         Q(user__in=request.user.follows.all()) |
+        (Q(user__in=request.user.follows.all()) |
          Q(ticket__user=request.user)) &
         ~Q(ticket__review__user=request.user)
     )
+    # Merge the querySets
     reviews = chain(
+        # Annotate the reviews as reviewed or unreviewed by the user
         reviews_reviewed.annotate(reviewed=Value(True, BooleanField())),
         reviews_unreviewed.annotate(reviewed=Value(False, BooleanField())))
 
+    # List all tickets if:
+    #   the user wrote the ticket
+    #   OR the user follows the ticket's author
+    # But only if the user already wrote a review for the tickets
     tickets_reviewed = models.Ticket.objects.filter(
         (Q(user=request.user) |
          Q(user__in=request.user.follows.all())) &
         Q(review__user=request.user)
     )
+    # List all tickets if:
+    #   the user wrote the ticket
+    #   OR the user follows the ticket's author
+    # But exclude all tickets when the user already wrote a review for them
     tickets_unreviewed = models.Ticket.objects.filter(
         (Q(user=request.user) |
          Q(user__in=request.user.follows.all())) &
         ~Q(review__user=request.user)
     )
+    # Merge the querySets
     tickets = chain(
+        # Annotate the tickets as reviewed or unreviewed by the user
         tickets_reviewed.annotate(reviewed=Value(True, BooleanField())),
         tickets_unreviewed.annotate(reviewed=Value(False, BooleanField())))
 
+    # Order the tickets and reviews by time_created, most recent first
     posts = sorted(chain(tickets, reviews),
                    key=lambda x: x.time_created,
                    reverse=True)
