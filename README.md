@@ -107,7 +107,7 @@ Ergonomic and aesthetic improvements to provide a better user experience:
 - Colored distinction between tickets and reviews
   - Visual help for a better browsing experience
 - Use of emojis
-  - Makes the app more lively
+  - Makes the app more lively 
 
 ## Future developments
 
