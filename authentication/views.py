@@ -74,7 +74,8 @@ def following_page(request):
                 username = unfollow_form.cleaned_data['unfollow_user']
                 try:
                     # Make sure the user exists and is in the followed users
-                    user_to_unfollow = models.User.objects.get(username=username)
+                    user_to_unfollow = models.User.objects.get(
+                        username=username)
                     if user_to_unfollow in followed:
                         request.user.follows.remove(user_to_unfollow)
                         return redirect('following')

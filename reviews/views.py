@@ -25,7 +25,8 @@ def feed(request):
     # List all reviews if:
     #   the user follows the review's author
     #   OR the user wrote the review's ticket
-    # But exclude all reviews when the user already wrote a review for the same ticket
+    # But exclude all reviews when the user already wrote a review
+    # for the same ticket
     reviews_unreviewed = models.Review.objects.filter(
         (Q(user__in=request.user.follows.all()) |
          Q(ticket__user=request.user)) &
@@ -145,7 +146,8 @@ def view_posts(request):
     tickets = models.Ticket.objects.filter(user=request.user)
     tickets = tickets.annotate(editable=Value(True, BooleanField()))
 
-    # Merge and order the tickets and reviews by time_created, most recent first
+    # Merge and order the tickets and reviews by time_created,
+    # most recent first
     posts = sorted(chain(tickets, reviews),
                    key=lambda x: x.time_created,
                    reverse=True)
