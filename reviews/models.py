@@ -16,6 +16,7 @@ class Ticket(models.Model):
     image = models.ImageField(null=True, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
 
+    # Save images with a maximum size
     def resize_image(self):
         if self.image:
             with Image.open(self.image) as image:

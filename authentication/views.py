@@ -43,16 +43,22 @@ def signup_page(request):
 
 @login_required
 def following_page(request):
+    # Form to follow a user
     follow_form = forms.FollowUsersForm()
+    # Form to unfollow a user
     unfollow_form = forms.UnfollowUsersForm()
+    # List of followed users
     followed = request.user.follows.all()
+    # List of followers
     followers = models.User.objects.filter(follows__id=request.user.id)
     if request.method == 'POST':
+        # Check for hidden field in form
         if 'follow_user' in request.POST:
             follow_form = forms.FollowUsersForm(request.POST)
             if follow_form.is_valid():
                 username = follow_form.cleaned_data['follow_user']
                 try:
+                    # Make sure the user exists and is not the current user
                     user_to_follow = models.User.objects.get(username=username)
                     if user_to_follow and user_to_follow != request.user:
                         request.user.follows.add(user_to_follow)
@@ -67,8 +73,8 @@ def following_page(request):
             if unfollow_form.is_valid():
                 username = unfollow_form.cleaned_data['unfollow_user']
                 try:
-                    user_to_unfollow = models.User.objects.get(
-                        username=username)
+                    # Make sure the user exists and is in the followed users
+                    user_to_unfollow = models.User.objects.get(username=username)
                     if user_to_unfollow in followed:
                         request.user.follows.remove(user_to_unfollow)
                         return redirect('following')

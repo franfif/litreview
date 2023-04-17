@@ -91,10 +91,12 @@ def write_review_from_ticket(request, ticket_id):
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
     reviews = ticket.review_set.all()
     for review in reviews:
+        # The user already wrote a ticket
         if review.user == request.user:
             messages.warning(request,
                              "You already posted a review for this ticket. "
                              "You can edit your review here.")
+            # Redirect the user to edit the ticket
             return redirect('edit_review', review.id)
     if request.method == 'POST':
         form = forms.ReviewForm(request.POST)
@@ -104,6 +106,7 @@ def write_review_from_ticket(request, ticket_id):
             review.ticket = ticket
             review.save()
             return redirect(settings.LOGIN_REDIRECT_URL)
+    # For any other request method than 'POST'
     return render(request,
                   'reviews/write_review.html',
                   context={'form': form,
@@ -112,15 +115,18 @@ def write_review_from_ticket(request, ticket_id):
 
 @login_required
 def create_ticket_and_review(request):
+    # Use a form for each a ticket and a review
     ticket_form = forms.TicketForm()
     review_form = forms.ReviewForm()
     if request.method == 'POST':
         ticket_form = forms.TicketForm(request.POST, request.FILES)
         review_form = forms.ReviewForm(request.POST)
         if all([ticket_form.is_valid(), review_form.is_valid()]):
+            # Complete and save ticket
             ticket = ticket_form.save(commit=False)
             ticket.user = request.user
             ticket.save()
+            # Complete and save review
             review = review_form.save(commit=False)
             review.user = request.user
             review.ticket = ticket
@@ -139,6 +145,7 @@ def view_posts(request):
     tickets = models.Ticket.objects.filter(user=request.user)
     tickets = tickets.annotate(editable=Value(True, BooleanField()))
 
+    # Merge and order the tickets and reviews by time_created, most recent first
     posts = sorted(chain(tickets, reviews),
                    key=lambda x: x.time_created,
                    reverse=True)
@@ -151,6 +158,7 @@ def view_posts(request):
 @login_required
 def edit_ticket(request, ticket_id):
     ticket = get_object_or_404(models.Ticket, id=ticket_id)
+    # Only the author can edit a ticket
     if request.user != ticket.user:
         messages.error(request,
                        "You don't have permission to edit this ticket.")
@@ -171,6 +179,7 @@ def edit_ticket(request, ticket_id):
 @login_required
 def edit_review(request, review_id):
     review = get_object_or_404(models.Review, id=review_id)
+    # Only the author can edit a review
     if request.user != review.user:
         messages.error(request,
                        "You don't have permission to edit this review.")
