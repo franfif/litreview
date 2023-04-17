@@ -7,7 +7,7 @@ LITReview<br>Django Web Application<br>
 LITReview is a (fictional - for education purposes) start-up that aims to release a product that enables a community of users to review books and literature on demand.
 
 This MVP (minimum viable product) has been developed with the [Django framework](https://docs.djangoproject.com/en/4.1/).<br>
-[Bootstrap 4](https://getbootstrap.com/docs/4.6) has been use for the design, completed with a few lines of vanilla CSS.
+[Bootstrap 4](https://getbootstrap.com/docs/4.6) has been used for the design, completed with a few lines of vanilla CSS.
 <br>
 The python package [django-crispy-forms](https://django-crispy-forms.readthedocs.io/) has been used to render most forms in the application.
 
@@ -36,7 +36,7 @@ First, a user needs to sign up and log in to the application.
 Only a username and a password are required.
 The password must contain at least 8 characters.
 
-For testing, a few users have been created with content (username / password):
+For testing purposes, a few users have been created with content (username / password):
   - book_reviewer / book_reviewer2023
   - super_review / super_review2023
   - litreviewer / litreviewer2023
@@ -52,6 +52,7 @@ A navigation bar allows to navigate through the pages of the application:
 The navigation bar is always visible when the user scrolls down.
 
 For smaller screen, the options collapse into a dropdown menu with a burger button.
+
 ### Feed
 The first page the user sees is their feed. 
 The feed shows:
@@ -66,6 +67,7 @@ From the feed, the user can:
 - post a review from a ticket in their feed
 
 Once a user has posted a review, they are not able to post another review on the same ticket.
+
 ### Posts
 This page allows the user to edit or delete their own posts, tickets and reviews.
 
@@ -83,7 +85,36 @@ The Logout button is located in the dropdown menu with the user's username.
 
 Once the user logs out, they are properly notified and invited to log again, if they want.
 
-## Ideas for future developments
+## Minimal Design
+The style is composed mostly with Bootstrap 4. <br>
+The app displays a minimal user interface, following the requirements for this MVP including the wireframes.
+
+### Consistency throughout the app
+Consistency was achieved through the use of Django templates and partial templates, as well as the library Bootstrap 4,
+and crispy-forms.
+- Display of tickets
+- Display of reviews
+- Display of forms
+- Display of usernames (or "you" for the current user)
+- Display of dates, buttons, links, forms...
+
+### Creative Choices
+Ergonomic and aesthetic improvements to provide a better user experience:
+- Design of empty state pages
+  - Provides useful feedback and ways to create content
+- Useful feedback messages
+  - To confirm actions, like the deletion of a post
+- Colored distinction between tickets and reviews
+  - Visual help for a better browsing experience
+- Use of emojis
+  - Makes the app more lively
+
+## Future developments
+
+* ### 404 Page
+**Currently:** the 404 page is displayed by Django while the app is in DEBUG mode.
+<br>
+**Goal:** display a custom 404 page to provide useful information to the users.
 
 * ### Time zone
 **Currently:** the date and time are displayed in the UTC time zone.
